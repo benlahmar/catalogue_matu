@@ -86,6 +86,16 @@ public class CatalogueApi {
 		return p;
 		
 	}
+	@GetMapping("produits/{id}")
+	public ResponseEntity<Produit> getprd(@PathVariable long id) 
+	{
+		Optional<Produit> po = service.getidprd(id);
+		if(po.isPresent())
+		{
+			return new ResponseEntity<>(po.get(),HttpStatus.OK);
+		}else
+			return new ResponseEntity<Produit>(HttpStatus.NO_CONTENT);
+	}
 	
 	@GetMapping("produits/search/{dsg}")
 	public List<ProduitDto> allpr(@PathVariable String dsg)

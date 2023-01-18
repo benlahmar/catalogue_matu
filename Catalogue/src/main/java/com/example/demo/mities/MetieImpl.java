@@ -84,4 +84,10 @@ public class MetieImpl implements IMetier{
 		
 	}
 
+	@Override
+	public Optional<Produit> getidprd(long id) {
+		// TODO Auto-generated method stub
+		return prepo.findById(id);
+	}
+
 }

@@ -51,4 +51,6 @@ public interface IMetier {
 	
 	public List<Produit> findByCondition(Predicate<Produit> prid);
 	
+	public Optional<Produit> getidprd(long id);
+	
 }
