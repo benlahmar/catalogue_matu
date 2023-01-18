@@ -5,8 +5,12 @@ package com.example.demo.api;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
+
+import javax.persistence.Tuple;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entities.Categorie;
 import com.example.demo.entities.Produit;
+import com.example.demo.entities.ProduitDto;
 import com.example.demo.mities.IMetier;
 
 /**
@@ -82,5 +87,45 @@ public class CatalogueApi {
 		
 	}
 	
+	@GetMapping("produits/search/{dsg}")
+	public List<ProduitDto> allpr(@PathVariable String dsg)
+	{
+		return service.getdsg(dsg);
+	}
+	
+	@GetMapping("produits/search2/{dsg}")
+	public List<Tuple> allpr2(@PathVariable String dsg)
+	{
+		List<Tuple> res = service.findbyx(dsg);
+		res.forEach(x-> System.out.println(x.get(0)));
+		
+		
+		return res;
+	}
 	 
+	@GetMapping("/produits/kk")
+	public List<Produit> getdataprd()
+	{
+		return service.findByCondition(x->x.getPrice()>20);
+	}
+	
+	
+	@GetMapping("/produits/qte")
+	public List<Produit> getdatdprd2()
+	{
+		List<Produit> res = service.findByCondition(x->x.getQuantity()<10);
+		
+		
+		return res;
+	}
+	
+	@GetMapping("/produits/complex")
+	public List<Produit> getdatdprd3()
+	{
+		Predicate<Produit> prd1= x-> x.getQuantity()<20;
+		Predicate<Produit> prd2= x-> x.getPrice()>120;
+		Predicate<Produit> prd3= x-> x.getDesg().startsWith("cl");
+		
+		return service.findByCondition(prd1.and(prd2).or(prd3));
+	}
 }

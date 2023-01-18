@@ -2,6 +2,11 @@ package com.example.demo.mities;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
+
+import javax.persistence.Tuple;
+
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.entities.Categorie;
 import com.example.demo.entities.Produit;
@@ -10,6 +15,7 @@ import com.example.demo.entities.Produit;
  * @author moi
  *
  */
+import com.example.demo.entities.ProduitDto;
 public interface IMetier {
 	/**
 	 * pour ajouter une categorie
@@ -38,4 +44,11 @@ public interface IMetier {
 	
 	public List<Produit> allprd();
 	public Optional<Categorie> findcat(long id);
+	
+	public List<ProduitDto> getdsg( String dsg);
+	
+	public List<Tuple>  findbyx(String d);
+	
+	public List<Produit> findByCondition(Predicate<Produit> prid);
+	
 }
